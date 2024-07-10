@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Ombabavk/Portfolio.git/static/css/main.8a5c366a.css",
+    "main.js": "/Ombabavk/Portfolio.git/static/js/main.4fdc0973.js",
+    "static/js/453.9af1815d.chunk.js": "/Ombabavk/Portfolio.git/static/js/453.9af1815d.chunk.js",
+    "index.html": "/Ombabavk/Portfolio.git/index.html",
+    "static/media/index.cjs": "/Ombabavk/Portfolio.git/static/media/index.cd351d7c31d0d3fccf96.cjs",
+    "main.8a5c366a.css.map": "/Ombabavk/Portfolio.git/static/css/main.8a5c366a.css.map",
+    "main.4fdc0973.js.map": "/Ombabavk/Portfolio.git/static/js/main.4fdc0973.js.map",
+    "453.9af1815d.chunk.js.map": "/Ombabavk/Portfolio.git/static/js/453.9af1815d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8a5c366a.css",
+    "static/js/main.4fdc0973.js"
+  ]
+}
