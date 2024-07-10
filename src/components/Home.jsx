@@ -10,10 +10,13 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect: name', name); // Add a log statement to check the value of `name`
     const interval = setInterval(() => {
+      console.log('interval: ref.current', ref.current); // Add a log statement to check the value of `ref.current`
       if (ref.current < name.length) {
         ref.current++;
         setText((prevText) => prevText + name[ref.current - 1]);
+        console.log('setText: text', text); // Add a log statement to check the value of `text`
       }
     }, 500);
     return () => clearInterval(interval);
