@@ -1,29 +1,34 @@
 import React from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
+import sanitizeHtml from 'sanitize-html';
 import { experiences } from '../constants';
-import Footer from './Footer';
-
 
 const Experience = () => {
   return (
-    <div className='experience bg-black w-screen text-white pt-4 pt-16 overflow-x-hidden' id='experience'>
+    <div className='experience bg-black w-screen text-white pt-4 pt-16 overflow-y-auto h-screen' id='experience'>
       <div className='pt-12 sm:px-16'>
         <p className='font-light'>MY JOURNEY SO FAR.</p>
         <h2 className='text-4xl sm:text-5xl font-extrabold mt-2'>Work Experience.</h2>
       </div>
-      <VerticalTimeline className='mt-9'>
+      <VerticalTimeline className='mt-9 overflow-y-auto'>
         {experiences.map((experience) => (
           <VerticalTimelineElement
+            key={experience.role} // Added a key for each element
             className="relative vertical-timeline-element--work"
-            contentStyle={{ background: "#1d1836", color: "#fff", }}
+            contentStyle={{ background: "#1d1836", color: "#fff" }}
             contentArrowStyle={{ borderRight: "7px solid  #232631" }}
             date={experience.duration}
             iconStyle={{ background: '#fff' }}
             icon={
-              <a className='flex justify-center items-center w-full h-full' href={experience.url} target='_blank'>
+              <a
+                className='flex justify-center items-center w-full h-full'
+                href={sanitizeHtml(experience.url)}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <img
-                  src={experience.logo}
+                  src={sanitizeHtml(experience.logo)}
                   alt={experience.company}
                   className='w-[60%] h-[60%] object-contain'
                 />
@@ -39,7 +44,6 @@ const Experience = () => {
                 {experience.company}
               </p>
             </div>
-
             <ul className='mt-5 list-disc ml-5 space-y-2'>
               {experience.points.map((point, index) => (
                 <li
@@ -53,9 +57,8 @@ const Experience = () => {
           </VerticalTimelineElement>
         ))}
       </VerticalTimeline>
-      <Footer/>
     </div>
-  )
-}
+  );
+};
 
 export default Experience;

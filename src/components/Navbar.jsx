@@ -19,20 +19,19 @@ const Navbar = () => {
   }, [pathname]);
 
   return (
-    <nav className="bg-gray-800 p-4 text-white fixed w-full z-10 top-0" style={{ cursor: 'default' }}>
+    <nav className="bg-black-800 p-4 text-white fixed w-full z-10 top-0" style={{ cursor: 'default' }}>
       <div className="mx-auto text-center flex w-5/6 justify-between">
         
         <div className="hidden sm:flex space-x-4 items-center text-sm">
-          <Link to='/'>Home</Link>
           <Link to='/about'>About</Link>
+          <Link to='/projects'>Projects</Link>
         </div>
         <div className="text-3xl sm:text-2xl font-extrabold">
-          <a href="/">Nithin Manda</a>
+          <a href="/">Anirudh Kalapatapu</a>
         </div>
         <div className="hidden sm:flex space-x-4 items-center text-sm">
-          <Link to='/projects'>Projects</Link>
           <Link to='/experience'>Experience</Link>
-          <Link to='/contact'>Contact</Link>
+          <Link to='/reviews'>Reviews</Link>
         </div>
 
         <div className="sm:hidden">
@@ -45,11 +44,9 @@ const Navbar = () => {
             ✕
           </button>
           <ul className="font-medium text-2xl space-y-4">
-            <li><Link to='/' onClick={closeMobileMenu}>Home</Link></li>
             <li><Link to='/about' onClick={closeMobileMenu}>About</Link></li>
             <li><Link to='/projects' onClick={closeMobileMenu}>Projects</Link></li>
             <li><Link to='/experience' onClick={closeMobileMenu}>Experince</Link></li>
-            <li><Link to='/contact' onClick={closeMobileMenu}>Contact</Link></li>
           </ul>
         </div>
       </div>
