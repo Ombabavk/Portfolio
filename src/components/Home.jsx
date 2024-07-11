@@ -1,36 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { name } from '../constants';
 import Background from './Background';
-import ThreeDScene from './ThreeDScene'; // Import the 3D scene component
+import ThreeDScene from './ThreeDScene';
 
 const Home = () => {
-  const ref = useRef(0);
   const [text, setText] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (ref.current < name.length) {
-        ref.current++;
-        setText((prevText) => prevText + name[ref.current - 1]);
+      if (text.length < name.length) {
+        setText((prevText) => prevText + name[text.length]);
       }
     }, 500);
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleLoad = () => {
-      setIsLoaded(true);
-    };
-    window.addEventListener('load', handleLoad);
-    return () => window.removeEventListener('load', handleLoad);
-  }, []);
+  }, [text, name]);
 
   useEffect(() => {
     const handleContextLost = (event) => {
       event.preventDefault();
       console.error('WebGL context lost');
-      setIsLoaded(false); // Set to false to show the loading state
+      setIsLoaded(false);
     };
 
     window.addEventListener('webglcontextlost', handleContextLost, false);

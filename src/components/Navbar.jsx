@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isNavbarHidden, setNavbarHidden] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -18,19 +19,40 @@ const Navbar = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setNavbarHidden(true);
+      } else {
+        setNavbarHidden(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="bg-black-800 p-4 text-white fixed w-full z-10 top-0" style={{ cursor: 'default' }}>
+    <nav
+      className={`bg-black-800 p-4 text-white fixed w-full z-10 top-0 ${
+        isNavbarHidden ? 'hidden' : ''
+      }`}
+      style={{ cursor: 'default' }}
+    >
       <div className="mx-auto text-center flex w-5/6 justify-between">
         <div className="hidden sm:flex space-x-4 items-center text-sm">
-          <Link to='/about'>About</Link>
-          <Link to='/projects'>Projects</Link>
+          <Link to="/about">About</Link>
+          <Link to="/projects">Projects</Link>
         </div>
         <div className="text-3xl sm:text-2xl font-extrabold">
           <Link to="/">Anirudh Kalapatapu</Link>
         </div>
         <div className="hidden sm:flex space-x-4 items-center text-sm">
-          <Link to='/experience'>Experience</Link>
-          <Link to='/reviews'>Reviews</Link>
+          <Link to="/experience">Experience</Link>
+          <Link to="/reviews">Reviews</Link>
         </div>
 
         <div className="sm:hidden">
@@ -38,15 +60,35 @@ const Navbar = () => {
             {isMobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
-        <div className={`sm:hidden fixed top-0 left-0 w-full h-full bg-gray-800 text-center ${isMobileMenuOpen ? 'flex flex-col items-center justify-center' : 'hidden'}`}>
+        <div
+          className={`sm:hidden fixed top-0 left-0 w-full h-full bg-gray-800 text-center ${
+            isMobileMenuOpen ? 'flex flex-col items-center justify-center' : 'hidden'
+          }`}
+        >
           <button onClick={closeMobileMenu} className="text-xl absolute top-4 right-4 focus:outline-none">
             ✕
           </button>
           <ul className="font-medium text-2xl space-y-4">
-            <li><Link to='/about' onClick={closeMobileMenu}>About</Link></li>
-            <li><Link to='/projects' onClick={closeMobileMenu}>Projects</Link></li>
-            <li><Link to='/experience' onClick={closeMobileMenu}>Experience</Link></li>
-            <li><Link to='/reviews' onClick={closeMobileMenu}>Reviews</Link></li>
+            <li>
+              <Link to="/about" onClick={closeMobileMenu}>
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/projects" onClick={closeMobileMenu}>
+                Projects
+              </Link>
+            </li>
+            <li>
+              <Link to="/experience" onClick={closeMobileMenu}>
+                Experience
+              </Link>
+            </li>
+            <li>
+              <Link to="/reviews" onClick={closeMobileMenu}>
+                Reviews
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
