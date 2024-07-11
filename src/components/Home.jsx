@@ -5,25 +5,23 @@ import Footer from './Footer';
 import ThreeDScene from './ThreeDScene';
 
 const Home = () => {
-  const textRef = useRef('');
+  const ref = useRef(0);
   const [text, setText] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     console.log('useEffect: name', name);
-    let intervalId;
-    const animateName = () => {
-      intervalId = setInterval(() => {
-        if (textRef.current.length < name.length) {
-          textRef.current += name[textRef.current.length];
-          setText(textRef.current);
-        } else {
-          clearInterval(intervalId);
-        }
-      }, 500);
-    };
-    animateName();
-    return () => clearInterval(intervalId);
+    const interval = setInterval(() => {
+      console.log('interval: ref.current', ref.current);
+      if (ref.current < name.length) {
+        ref.current++;
+        setText((prevText) => prevText + name[ref.current - 1]);
+        console.log('setText: text', text);
+      } else {
+        clearInterval(interval);
+      }
+    }, 500);
+    return () => clearInterval(interval);
   }, [name]);
 
   useEffect(() => {
@@ -49,7 +47,7 @@ const Home = () => {
         <li></li>
       </ul>
       <div className='hero relative h-[calc(100vh)] flex flex-col justify-center items-center text-white' id='hero'>
-        {isLoaded ? (
+        {isLoaded? (
           <div className='pt-4 h-36 backdrop-blur-sm rounded-3xl'>
             <h1 className='text-6xl sm:text-7xl font-extrabold mt-2'>
               Hi, I'm&nbsp;<span className='text-yellow-200 font-extrabold'>{text}</span>
