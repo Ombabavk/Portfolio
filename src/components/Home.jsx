@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { name } from '../constants';
 import Background from './Background';
-import Footer from './Footer';
-import ThreeDScene from './ThreeDScene';
+import ThreeDScene from './ThreeDScene'; // Import the 3D scene component
 
 const Home = () => {
   const ref = useRef(0);
@@ -10,19 +9,14 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect: name', name);
     const interval = setInterval(() => {
-      console.log('interval: ref.current', ref.current);
       if (ref.current < name.length) {
         ref.current++;
         setText((prevText) => prevText + name[ref.current - 1]);
-        console.log('setText: text', text);
-      } else {
-        clearInterval(interval);
       }
     }, 500);
     return () => clearInterval(interval);
-  }, [name]);
+  }, []);
 
   useEffect(() => {
     const handleLoad = () => {
@@ -30,6 +24,20 @@ const Home = () => {
     };
     window.addEventListener('load', handleLoad);
     return () => window.removeEventListener('load', handleLoad);
+  }, []);
+
+  useEffect(() => {
+    const handleContextLost = (event) => {
+      event.preventDefault();
+      console.error('WebGL context lost');
+      setIsLoaded(false); // Set to false to show the loading state
+    };
+
+    window.addEventListener('webglcontextlost', handleContextLost, false);
+
+    return () => {
+      window.removeEventListener('webglcontextlost', handleContextLost, false);
+    };
   }, []);
 
   return (
@@ -47,7 +55,7 @@ const Home = () => {
         <li></li>
       </ul>
       <div className='hero relative h-[calc(100vh)] flex flex-col justify-center items-center text-white' id='hero'>
-        {isLoaded? (
+        {isLoaded ? (
           <div className='pt-4 h-36 backdrop-blur-sm rounded-3xl'>
             <h1 className='text-6xl sm:text-7xl font-extrabold mt-2'>
               Hi, I'm&nbsp;<span className='text-yellow-200 font-extrabold'>{text}</span>
@@ -60,10 +68,9 @@ const Home = () => {
           <div className='text-white text-2xl'>Loading...</div>
         )}
         <div className='mt-10 w-full h-96'>
-          <ThreeDScene />
+          <ThreeDScene /> {/* Add the 3D scene here */}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

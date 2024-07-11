@@ -8,10 +8,10 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Anirudh Kalapatapu. All rights reserved.
         </p>
         <div className='flex justify-center mt-2'>
-          <a href='https://github.com/yourgithub' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
+          <a href='https://github.com/Ombabavk' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
             GitHub
           </a>
-          <a href='https://linkedin.com/in/yourlinkedin' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
+          <a href='https://linkedin.com/in/anirudhvk' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
             LinkedIn
           </a>
           <a href='mailto:your-email@example.com' className='mx-2 text-gray-400 hover:text-white'>
