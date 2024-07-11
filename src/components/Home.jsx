@@ -2,24 +2,28 @@ import React, { useState, useEffect, useRef } from 'react';
 import { name } from '../constants';
 import Background from './Background';
 import Footer from './Footer';
-import ThreeDScene from './ThreeDScene'; // Import the 3D scene component
+import ThreeDScene from './ThreeDScene';
 
 const Home = () => {
-  const ref = useRef(0);
+  const textRef = useRef('');
   const [text, setText] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect: name', name); // Add a log statement to check the value of `name`
-    const interval = setInterval(() => {
-      console.log('interval: ref.current', ref.current); // Add a log statement to check the value of `ref.current`
-      if (ref.current < name.length) {
-        ref.current++;
-        setText((prevText) => prevText + name[ref.current - 1]);
-        console.log('setText: text', text); // Add a log statement to check the value of `text`
-      }
-    }, 500);
-    return () => clearInterval(interval);
+    console.log('useEffect: name', name);
+    let intervalId;
+    const animateName = () => {
+      intervalId = setInterval(() => {
+        if (textRef.current.length < name.length) {
+          textRef.current += name[textRef.current.length];
+          setText(textRef.current);
+        } else {
+          clearInterval(intervalId);
+        }
+      }, 500);
+    };
+    animateName();
+    return () => clearInterval(intervalId);
   }, [name]);
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const Home = () => {
           <div className='text-white text-2xl'>Loading...</div>
         )}
         <div className='mt-10 w-full h-96'>
-          <ThreeDScene /> {/* Add the 3D scene here */}
+          <ThreeDScene />
         </div>
       </div>
       <Footer />
