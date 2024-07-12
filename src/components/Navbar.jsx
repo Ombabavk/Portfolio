@@ -21,7 +21,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
+      console.log('window.scrollY:', window.scrollY); // Debug log
+      if (window.scrollY > 50) { // Increased threshold for better visibility
         setNavbarHidden(true);
       } else {
         setNavbarHidden(false);
@@ -37,8 +38,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`bg-black-800 p-4 text-white fixed w-full z-10 top-0 ${
-        isNavbarHidden ? 'hidden' : ''
+      className={`bg-black-800 p-4 text-white fixed w-full z-10 top-0 transition-transform duration-300 ${
+        isNavbarHidden ? 'transform -translate-y-full' : ''
       }`}
       style={{ cursor: 'default' }}
     >

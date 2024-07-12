@@ -1,47 +1,52 @@
 import React, { useRef, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
-
-const Model = () => {
-  const { scene } = useGLTF(process.env.PUBLIC_URL + '/scene.gltf'); // Corrected path
-  return <primitive object={scene} scale={0.5} />;
-};
+import * as THREE from 'three';
 
 const ThreeDScene = () => {
-  const canvasRef = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
-    const handleContextLost = (event) => {
-      event.preventDefault();
-      console.error('WebGL context lost');
-    };
+    if (!ref.current) return; // Make sure the ref is set
 
-    const handleContextRestored = () => {
-      console.log('WebGL context restored');
-    };
-
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      canvas.addEventListener('webglcontextlost', handleContextLost, false);
-      canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+    const canvas = ref.current; // Get the canvas element
+    const context = canvas.getContext('webgl2', { alpha: false }); // Get the WebGL context
+    if (!context) {
+      console.error('Failed to get WebGL context');
+      return;
     }
 
-    return () => {
-      if (canvas) {
-        canvas.removeEventListener('webglcontextlost', handleContextLost, false);
-        canvas.removeEventListener('webglcontextrestored', handleContextRestored, false);
-      }
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      context: context, // Pass the context to the renderer
+      antialias: true,
+    });
+
+    const geometry = new THREE.SphereGeometry(1, 60, 60);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const sphere = new THREE.Mesh(geometry, material);
+
+    scene.add(sphere);
+
+    camera.position.z = 5;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     };
-  }, []);
+
+    animate();
+  }, [ref]);
 
   return (
-    <Canvas ref={canvasRef}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} />
-      <Model />
-      <OrbitControls />
-    </Canvas>
+    <canvas
+      ref={ref}
+      style={{
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    />
   );
 };
 

@@ -1,26 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { name } from '../constants';
-import Background from './Background';
-import ThreeDScene from './ThreeDScene';
+import nebulaVideo from '../assets/Nebula.mp4';
 
 const Home = () => {
   const [text, setText] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (text.length < name.length) {
-        setText((prevText) => prevText + name[text.length]);
+    const intervalId = setInterval(() => {
+      if (currentIndex < name.length) {
+        setText(name.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        clearInterval(intervalId);
       }
-    }, 500);
-    return () => clearInterval(interval);
-  }, [text, name]);
+    }, 100); // Update every 100ms
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [currentIndex]);
 
   useEffect(() => {
     const handleContextLost = (event) => {
       event.preventDefault();
       console.error('WebGL context lost');
-      setIsLoaded(false);
     };
 
     window.addEventListener('webglcontextlost', handleContextLost, false);
@@ -32,21 +36,22 @@ const Home = () => {
 
   return (
     <div className='area relative z-0 bg-black w-screen h-screen'>
-      <Background />
-      <ul className="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <div className='hero relative h-[calc(100vh)] flex flex-col justify-center items-center text-white' id='hero'>
-        {isLoaded ? (
-          <div className='pt-4 h-36 backdrop-blur-sm rounded-3xl'>
+      <video
+        autoPlay
+        loop
+        muted
+        className='video-background absolute top-0 left-0 w-full h-full object-cover'
+      >
+        <source src={nebulaVideo} type='video/mp4' />
+      </video>
+      <div className='absolute top-0 left-0 w-full h-full'>
+        <ul className="circles">
+          {Array(9).fill(0).map((_, index) => (
+            <li key={index}></li>
+          ))}
+        </ul>
+        <div className='hero relative h-full flex flex-col justify-center items-center text-white' id='hero'>
+          <div className='pt-4 h-36 rounded-3xl'>
             <h1 className='text-6xl sm:text-7xl font-extrabold mt-2'>
               Hi, I'm&nbsp;<span className='text-yellow-200 font-extrabold'>{text}</span>
             </h1>
@@ -54,11 +59,6 @@ const Home = () => {
               I love to code and analyze data, building scalable and optimized systems to drive business insights and efficiencies.
             </p>
           </div>
-        ) : (
-          <div className='text-white text-2xl'>Loading...</div>
-        )}
-        <div className='mt-10 w-full h-96'>
-          <ThreeDScene /> {/* Add the 3D scene here */}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import '../App.css'
 const About = () => {
   return (
     <div className="h-screen bg-black">
+      <nav className="bg-black"></nav>
       <div className='w-screen text-white sm:flex sm:justify-around about py-12 mt-8 overflow-x-hidden' id='about'>
         <div className='flex flex-col justify-around'>
           <div className='sm:px-16 px-2'>
