@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isNavbarHidden, setNavbarHidden] = useState(false);
+function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Destructured into value and setter pair
+  const [navbarHidden, setNavbarHidden] = useState(false); // Destructured into value and setter pair
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
@@ -21,27 +21,25 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('window.scrollY:', window.scrollY); // Debug log
-      if (window.scrollY > 50) { // Increased threshold for better visibility
+      if (window.scrollY > 50) {
+        // Increased threshold for better visibility
         setNavbarHidden(true);
       } else {
         setNavbarHidden(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <nav
-      className={`bg-black-800 p-4 text-white fixed w-full z-10 top-0 transition-transform duration-300 ${
-        isNavbarHidden ? 'transform -translate-y-full' : ''
-      }`}
-      style={{ cursor: 'default' }}
+      className={`fixed w-full z-10 top-0 transition-transform duration-300 bg-transparent p-4 text-white shadow-md ${navbarHidden ? "hidden" : ""}`}
+      style={{ cursor: "default", backgroundColor: "rgba(255, 255, 255, 0.1)" }}
     >
       <div className="mx-auto text-center flex w-5/6 justify-between">
         <div className="hidden sm:flex space-x-4 items-center text-sm">
@@ -49,7 +47,7 @@ const Navbar = () => {
           <Link to="/projects">Projects</Link>
         </div>
         <div className="text-3xl sm:text-2xl font-extrabold">
-          <Link to="/">Anirudh Kalapatapu</Link>
+          <Link to="/">Home</Link>
         </div>
         <div className="hidden sm:flex space-x-4 items-center text-sm">
           <Link to="/experience">Experience</Link>
@@ -57,16 +55,26 @@ const Navbar = () => {
         </div>
 
         <div className="sm:hidden">
-          <button onClick={toggleMobileMenu} className="text-xl focus:outline-none">
-            {isMobileMenuOpen ? '✕' : '☰'}
+          <button
+            type="button"
+            onClick={toggleMobileMenu}
+            className="text-xl focus:outline-none"
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
           </button>
         </div>
         <div
           className={`sm:hidden fixed top-0 left-0 w-full h-full bg-gray-800 text-center ${
-            isMobileMenuOpen ? 'flex flex-col items-center justify-center' : 'hidden'
+            mobileMenuOpen
+              ? "flex flex-col items-center justify-center"
+              : "hidden"
           }`}
         >
-          <button onClick={closeMobileMenu} className="text-xl absolute top-4 right-4 focus:outline-none">
+          <button
+            type="button"
+            onClick={closeMobileMenu}
+            className="text-xl absolute top-4 right-4 focus:outline-none"
+          >
             ✕
           </button>
           <ul className="font-medium text-2xl space-y-4">
@@ -95,6 +103,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

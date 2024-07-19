@@ -1,20 +1,34 @@
-import React from 'react';
+import React from "react";
 
-const Footer = () => {
+function Footer() {
   return (
-    <footer className='w-full bg-black text-white py-4 flex justify-center items-center'>
-      <div className='text-center'>
-        <p className='text-sm'>
-          &copy; {new Date().getFullYear()} Anirudh Kalapatapu. All rights reserved.
+    <footer className="w-full bg-black text-white py-4 flex justify-center items-center">
+      <div className="text-center">
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} Anirudh Kalapatapu. All rights
+          reserved.
         </p>
-        <div className='flex justify-center mt-2'>
-          <a href='https://github.com/Ombabavk' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
+        <div className="flex justify-center mt-2">
+          <a
+            href="https://github.com/Ombabavk"
+            className="mx-2 text-gray-400 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             GitHub
           </a>
-          <a href='https://linkedin.com/in/anirudhvk' className='mx-2 text-gray-400 hover:text-white' target='_blank' rel='noopener noreferrer'>
+          <a
+            href="https://linkedin.com/in/anirudhvk"
+            className="mx-2 text-gray-400 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LinkedIn
           </a>
-          <a href='mailto:your-email@example.com' className='mx-2 text-gray-400 hover:text-white'>
+          <a
+            href="mailto:your-email@example.com"
+            className="mx-2 text-gray-400 hover:text-white"
+          >
             Email
           </a>
         </div>

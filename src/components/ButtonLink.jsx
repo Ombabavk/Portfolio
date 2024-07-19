@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-const ButtonLink = ({ url, text, padding }) => {
+function ButtonLink({ url, text, padding }) {
   return (
     <a
       href={url}
@@ -11,6 +12,12 @@ const ButtonLink = ({ url, text, padding }) => {
       {text}
     </a>
   );
+}
+
+ButtonLink.propTypes = {
+  url: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  padding: PropTypes.string.isRequired,
 };
 
 export default ButtonLink;

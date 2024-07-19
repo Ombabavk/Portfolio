@@ -1,24 +1,28 @@
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
+import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
 
-const ThreeDScene = () => {
+function ThreeDScene() {
   const ref = useRef(null);
 
   useEffect(() => {
     if (!ref.current) return; // Make sure the ref is set
 
     const canvas = ref.current; // Get the canvas element
-    const context = canvas.getContext('webgl2', { alpha: false }); // Get the WebGL context
+    const context = canvas.getContext("webgl2", { alpha: false }); // Get the WebGL context
     if (!context) {
-      console.error('Failed to get WebGL context');
       return;
     }
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      canvas.clientWidth / canvas.clientHeight,
+      0.1,
+      1000,
+    );
     const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      context: context, // Pass the context to the renderer
+      canvas,
+      context, // Pass the context to the renderer
       antialias: true,
     });
 
@@ -42,12 +46,12 @@ const ThreeDScene = () => {
     <canvas
       ref={ref}
       style={{
-        width: '100%',
-        height: '100%',
-        overflow: 'hidden',
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
       }}
     />
   );
-};
+}
 
 export default ThreeDScene;
